@@ -17,13 +17,25 @@ const Tabla = () => {
     if (ver === true) {
       let aux = data;
       aux.LUGARES[x][y] = val.length === 0 ? 0 : parseInt(e.target.value);
-      aux.PUNTOS[x][y] = 8 - val.length === 0 ? 0 : parseInt(e.target.value);
-      
-      
-      
-      
+      aux.PUNTOS[x][y] = 8 - (val.length === 0 ? 0 : parseInt(e.target.value));
+      let tot = [0, 0, 0, 0, 0, 0, 0];
+      for (let x = 0; x < aux.PUNTOS.length; x++) {
+        for (let y = 0; y < aux.PUNTOS[x].length; y++) {
+          tot[y] += aux.PUNTOS[x][y];
+        }
+      }
+      aux.TOTALES = tot;
+      let lug = [1, 1, 1, 1, 1, 1, 1];
+      for (let x = 0; x < tot.length; x++) {
+        let cont = 1;
+        for (let y = 0; y < tot.length; y++) {
+          if (tot[x] < tot[y]) cont++;
+        }
+        lug[x] = cont;
+      }
+      aux.POSICIONES = lug;
       setData(aux);
-
+      console.log(aux);
       setFlag(!flag);
     }
   };
@@ -73,7 +85,7 @@ const Tabla = () => {
                 justifyContent: "center",
               }}
               value={
-                data.LUGARES[indexx][indexy] != 0
+                data.LUGARES[indexx][indexy] !== 0
                   ? data.LUGARES[indexx][indexy]
                   : ""
               }
