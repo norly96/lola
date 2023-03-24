@@ -1,6 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
-import * as XLSX from "xlsx"
 const Tabla = () => {
   var f = new File([""], "guama.xlsx", {type: "text/plain"})
   return (

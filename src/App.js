@@ -1,5 +1,5 @@
 import './App.css';
-import Tabla from './Tabla/Tabla';
+import Tabla from './TablaProf/Tabla';
 
 function App() {
   return (
