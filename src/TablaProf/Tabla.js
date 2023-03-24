@@ -1,23 +1,87 @@
-import React from "react";
-import logo from "./logo.svg";
-import * as XLSX from "xlsx"
+import React, { useState } from "react";
+import info from "../data.json";
 const Tabla = () => {
-  var f = new File([""], "guama.xlsx", {type: "text/plain"})
+  const [data, setData] = useState(info);
+  const [flag, setFlag] = useState(true);
+
+  const handlechange = (e, x, y) => {
+    let ver = true;
+
+    let val = e.target.value.toString();
+    console.log(e.target.value);
+    console.log(val, " es este");
+    for (var i = 0; i < val.length; i++) {
+      if (val.charAt(i) < 1 || val.charAt(i) > 7) ver = false;
+    }
+    if (val.length > 1) ver = false;
+    if (ver === true) {
+      let aux = data;
+      aux.LUGARES[x][y] = val.length === 0 ? 0 : parseInt(e.target.value);
+      aux.PUNTOS[x][y] = 8 - val.length === 0 ? 0 : parseInt(e.target.value);
+      
+      
+      
+      
+      setData(aux);
+
+      setFlag(!flag);
+    }
+  };
   return (
-    <div>
-      {" "}
-      {console.log(XLSX.readFile(f))}
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       <div
         style={{
-          position: "absolute",
-          display: "flex",
-          justifyContent: "center",
           width: "100%",
-          background: "#282c34",
+          display: "flex",
+          flexDirection: "row",
+          borderRadius: "4px",
         }}
       >
-        <img src={logo} style={{ height: "100vh" }} alt="logo" />
+        <div style={{ width: "200px" }}>Deportes</div>
+        {data.FACULTADES.map((x, index) => (
+          <div
+            style={{
+              width: "120px",
+              alignContent: "center",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {x}
+          </div>
+        ))}
       </div>
+
+      {data.LUGARES.map((x, indexx) => (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            borderRadius: "4px",
+          }}
+        >
+          <div style={{ width: "200px", border: "1px solid black" }}>
+            {data.DEPORTES[indexx]}
+          </div>
+          {data.LUGARES[indexx].map((y, indexy) => (
+            <input
+              style={{
+                width: "120px",
+                alignContent: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
+              value={
+                data.LUGARES[indexx][indexy] != 0
+                  ? data.LUGARES[indexx][indexy]
+                  : ""
+              }
+              onChange={(e) => handlechange(e, indexx, indexy)}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 };
