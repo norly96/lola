@@ -7,6 +7,9 @@ const Tabla = () => {
   const [facultades, setFacultades] = useState([]);
   const [deportes, setDeportes] = useState([]);
   const [lugares, setLugares] = useState([]);
+  const [totales, setTotales] = useState([]);
+  const [posiciones, setPosiciones] = useState([])
+  
 
   const getData = () => {
     fetch("./p.json", {
@@ -25,12 +28,16 @@ const Tabla = () => {
           setFacultades(myJson.FACULTADES);
           setDeportes(myJson.DEPORTES);
           setLugares(myJson.LUGARES);
+          setTotales(myJson.TOTALES);
+          setPosiciones(myJson.POSICIONES);
         }
       });
   };
   useEffect(() => {
     getData();
   }, []);
+
+  const log = () => { console.log(totales);}
 
   return (
     <div className={styles.container}>
@@ -131,6 +138,85 @@ const Tabla = () => {
             ))}
           </div>
         ))}
+
+<div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            borderRadius: "4px",
+          }}
+        >
+          <div
+            style={{
+              width: "200px",
+              display: "flex",
+              justifyContent: "center",
+              background: "#143601",
+              margin: "1px",
+              borderRadius: "10px",
+              color: "white"
+            }}
+          >
+            <strong>Total</strong>
+          </div>
+          {totales.map((x, index) => (
+            <label
+              style={{
+                width: "70px",
+                alignContent: "center",
+                display: "flex",
+                justifyContent: "center",
+                background: "#143601",
+                margin: "2px",
+                borderRadius: "10px",
+                color: "white"
+              }}
+            >
+              <strong> {x}</strong>
+            </label>
+          ))}
+        </div>
+
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            borderRadius: "4px",
+          }}
+        >
+          <div
+            style={{
+              width: "200px",
+              display: "flex",
+              justifyContent: "center",
+              background: "#00a5cf",
+              margin: "1px",
+              borderRadius: "10px",
+              color: "white"
+            }}
+          >
+            <strong>Lugar</strong>
+          </div>
+          {posiciones.map((x, index) => (
+            <label
+              style={{
+                width: "70px",
+                alignContent: "center",
+                display: "flex",
+                justifyContent: "center",
+                background: "#00a5cf",
+                margin: "2px",
+                borderRadius: "10px",
+                color: "white"
+              }}
+            >
+              <strong> {x}</strong>
+            </label>
+          ))}
+        </div>
+
       </div>
       
     </div>
